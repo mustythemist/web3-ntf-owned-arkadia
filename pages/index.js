@@ -1,10 +1,16 @@
 import { ConnectWallet, useAddress, useContract, useOwnedNFTs } from "@thirdweb-dev/react";
 import styles from "../styles/Home.module.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import myABI from '../abi.json'
 
+
 export default function Home() {
+
+  const [revealImg, setRevealImg] = useState(null);
+  const [filteredData, setFilteredData] = useState();
+  const [nfts, setNfts] = useState();
+  const [revealedItems, setrevealedItems] = useState([]);
 
   //Arkadians
   //0x3c178321f5BC73494046a46b5A065F9211b7C65E
@@ -32,7 +38,24 @@ export default function Home() {
     address,
   );
 
+  useEffect(() => {
+    if (!isLoading) {
+      setNfts(data)
+    }
+  }, [isLoading]);
+
   console.log(isLoading, data)
+
+  const handleReveal = (id) => {
+    setRevealImg(id)
+    console.log(id);
+    const result = nfts.filter((item) => item.metadata.edition !== id)
+    setNfts(result)
+    console.log(result);
+
+    revealedItems.push(id)
+    console.log('revealedItems', revealedItems);
+  }
 
   return (
     <div className={styles.container}>
@@ -49,15 +72,31 @@ export default function Home() {
 
           <h3>{!isLoading ? data.length : 'Loading'} NFTS</h3>
 
-          <div style={{ 'display': 'flex', 'gap': '10px' }}>
+          <div style={{ 'display': 'flex', 'gap': '10px', 'alignItems': 'baseline' }}>
             {
-              data && data.map((item, i) => (
+              nfts && nfts.map((item, i) => (
                 <div key={i}>
                   <img style={{ 'width': '100px' }} src={item.metadata.image} alt="" />
+
+                  <p htmlFor="">{item.metadata.edition}</p>
+                  <button onClick={() => handleReveal(item.metadata.edition)}>Reveal</button>
+                  {/* {
+                    revealImg ? <img src={revealImg} alt="" /> : null
+                  } */}
+                </div>
+              ))
+            }
+            {
+              revealedItems && revealedItems.map((item, i) => (
+                <div key={i}>
+                  <img src={`images/${item}.png`} alt="" />
                 </div>
               ))
             }
           </div>
+
+
+
         </div>
 
 
