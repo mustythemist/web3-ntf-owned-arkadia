@@ -51,8 +51,8 @@ export default function Home() {
 
           <div style={{ 'display': 'flex', 'gap': '10px' }}>
             {
-              data && data.map((item) => (
-                <div>
+              data && data.map((item, i) => (
+                <div key={i}>
                   <img style={{ 'width': '100px' }} src={item.metadata.image} alt="" />
                 </div>
               ))
