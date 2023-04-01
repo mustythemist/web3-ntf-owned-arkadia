@@ -2,6 +2,8 @@ import { ConnectWallet, useAddress, useContract, useOwnedNFTs } from "@thirdweb-
 import styles from "../styles/Home.module.css";
 import { useEffect } from "react";
 
+import myABI from '../abi.json'
+
 export default function Home() {
 
   //Arkadians
@@ -10,8 +12,18 @@ export default function Home() {
 
   //hax rabito
   //0x830A0C890A1F969586612b1FD98480e9406941f4
+
+
+  //vico
+  //0xa3083DeD9E6EC804117C24E7e2089FEd7173305a
+
+
   const address = useAddress();
-  const { contract } = useContract('0x3c178321f5BC73494046a46b5A065F9211b7C65E');
+  // const address = '0xa3083DeD9E6EC804117C24E7e2089FEd7173305a'
+  // const { contract } = useContract('0x3c178321f5BC73494046a46b5A065F9211b7C65E');
+
+  const { contract, isLoadingContacr, errorContract } = useContract("0x3c178321f5BC73494046a46b5A065F9211b7C65E", myABI);
+
 
 
   const { data, isLoading, error } = useOwnedNFTs(
@@ -26,7 +38,7 @@ export default function Home() {
     <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a>thirdweb</a>!
+          Welcome to <a>ARKADIA</a>!
         </h1>
 
         <br />
@@ -36,6 +48,16 @@ export default function Home() {
           <h2>Address - {address}</h2>
 
           <h3>{!isLoading ? data.length : 'Loading'} NFTS</h3>
+
+          <div style={{ 'display': 'flex', 'gap': '10px' }}>
+            {
+              data && data.map((item) => (
+                <div>
+                  <img style={{ 'width': '100px' }} src={item.metadata.image} alt="" />
+                </div>
+              ))
+            }
+          </div>
         </div>
 
 

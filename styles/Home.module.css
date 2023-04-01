@@ -36,7 +36,7 @@
 
 .connect {
   margin-bottom: 2rem;
-  width: 230px;
+  text-align: center;
 }
 
 .description {
@@ -111,9 +111,11 @@
 .footer {
   border-color: #222;
 }
+
 .code {
   background: #111;
 }
+
 .logo img {
   filter: invert(1);
 }
