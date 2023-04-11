@@ -1,6 +1,8 @@
 import { ConnectWallet, useAddress, useContract, useOwnedNFTs } from "@thirdweb-dev/react";
 import styles from "../styles/Home.module.css";
 import { useEffect, useState } from "react";
+import axios from 'axios';
+
 
 import myABI from '../abi.json'
 
@@ -24,8 +26,8 @@ export default function Home() {
   //0xa3083DeD9E6EC804117C24E7e2089FEd7173305a
 
 
-  const address = useAddress();
-  // const address = '0xa3083DeD9E6EC804117C24E7e2089FEd7173305a'
+  // const address = useAddress();
+  const address = '0xa3083DeD9E6EC804117C24E7e2089FEd7173305a'
   // const { contract } = useContract('0x3c178321f5BC73494046a46b5A065F9211b7C65E');
 
   const { contract, isLoadingContacr, errorContract } = useContract("0x3c178321f5BC73494046a46b5A065F9211b7C65E", myABI);
@@ -55,7 +57,45 @@ export default function Home() {
 
     revealedItems.push(id)
     console.log('revealedItems', revealedItems);
+
+    // const options = {
+    //   url: 'https://planet.oneplanetnft.cloud/nft/update-metadata',
+    //   method: 'POST',
+    //   headers: {
+    //     'PLANET-API-KEY': 'zLKZdA6MQUWXfDwE',
+    //   },
+    //   data: {
+    //     contractAddress: '0x3c178321f5BC73494046a46b5A065F9211b7C65E',
+    //     tokenId: `${id}`
+    //   }
+    // };
+
+    try {
+      axios(options)
+        .then(response => {
+          console.log('axios respose', response);
+        });
+    }
+    catch (e) {
+      console.log('catch error', e);
+    }
+
   }
+
+
+
+  // const message = "Sign this message...";
+  // const handleSign = async () => {
+  //   console.log('s');
+  //   const signature = await sdk.wallet.sign(message);
+  //   console.log(signature);
+
+  // }
+
+
+
+
+
 
   return (
     <div className={styles.container}>
@@ -96,6 +136,15 @@ export default function Home() {
           </div>
 
 
+
+
+        </div>
+
+        <div>
+          <br />
+          <br />
+          <br />
+          {/* <button onClick={() => handleSign()}>Test</button> */}
 
         </div>
 
